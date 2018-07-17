@@ -2,6 +2,7 @@ package Spaceable;
 
 import java.util.List;
 
+import math.IntegerCalc;
 import math.VectorInterface;
 import math.baseVector;
 import physics.PhysicsModelInterface;
@@ -9,8 +10,8 @@ import physics.PhysicsModelInterface;
 public class baseSystemTestEasy implements SystemInterface, Runnable {
 	
 	private PhysicsModelInterface physicsModel;
-	private List<SpaceObjectInterface> spaceObjList;
-	private SpaceObjectInterface centre;
+	private List<SpaceBodyInterface> spaceObjList;
+	private SpaceBodyInterface centre;
 	
 	private boolean toWorkingThread = true;
 
@@ -18,9 +19,9 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 		if(spaceObjList != null & centre != null & physicsModel != null) {
 			physicsModel.setSystemObjects(spaceObjList);
 			physicsModel.setTemp(100);
-			//int i = 0;
-			while(this.toWorkingThread) {//i < 10) {
-				//++i;
+			int i = 0;
+			while(i < 10) {//this.toWorkingThread) {//i < 10) {
+				++i;
 				physicsModel.nextState();
 				System.out.println(spaceObjList.get(0).getPositions().getX() + " p " + spaceObjList.get(0).getPositions().getY());
 				this.correlationPositions();
@@ -30,12 +31,12 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 	}
 
 	@Override
-	public List<SpaceObjectInterface> getSystemObjects() {
+	public List<SpaceBodyInterface> getSystemObjects() {
 		return this.spaceObjList;
 	}
 
 	@Override
-	public void setSystemObjects(List<SpaceObjectInterface> lObj) {
+	public void setSystemObjects(List<SpaceBodyInterface> lObj) {
 		this.spaceObjList = lObj;
 		if(centre != null) {
 			spaceObjList.add(centre);
@@ -43,7 +44,7 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 	}
 
 	@Override
-	public void setSystemObjects(SpaceObjectInterface obj) throws Exception {
+	public void setSystemObjects(SpaceBodyInterface obj) throws Exception {
 		if(spaceObjList != null) {
 			spaceObjList.add(obj);
 		}else {
@@ -52,7 +53,7 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 	}
 
 	@Override
-	public void setCentre(SpaceObjectInterface obj) {
+	public void setCentre(SpaceBodyInterface obj) {
 		this.centre = obj;
 		if(spaceObjList != null) {
 			spaceObjList.add(centre);
@@ -65,9 +66,10 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 	}
 	
 	private void correlationPositions() {
-		VectorInterface v = baseVector.multi(centre.getPositions(), -1.0);
+		VectorInterface v = baseVector.multi(centre.getPositions(), -1, IntegerCalc.INSTANCE);
 		for(int i = 0; i < spaceObjList.size(); ++i) {
 			spaceObjList.get(i).getPositions().add(v);
 		}
 	}
+
 }

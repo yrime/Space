@@ -1,14 +1,17 @@
 package Spaceable;
 
+import math.DoubleCalc;
+import math.IntegerCalc;
 import math.VectorInterface;
 import math.baseVector;
 
-public class baseSObject implements SpaceObjectInterface {
+public class baseSObject implements SpaceBodyInterface {
 	private VectorInterface<Double> acceleration;
 	private VectorInterface<Double> speed;
+	private Integer rad = 0;
 	//private Double field = 0.0;
-	private VectorInterface<Double> positions;
-	private VectorInterface<Double> fieldVector = new baseVector(0.0, 0.0, 0.0);
+	private VectorInterface<Integer> positions;
+	private VectorInterface<Double> fieldVector = new baseVector(0.0, 0.0, 0.0,  DoubleCalc.INSTANCE);
 	
 	private int mass = 0;
 
@@ -53,12 +56,12 @@ public class baseSObject implements SpaceObjectInterface {
 	}
 */
 	@Override
-	public VectorInterface<Double> getPositions() {
+	public VectorInterface<Integer> getPositions() {
 		return this.positions;
 	}
 
 	@Override
-	public void setPositions(VectorInterface<Double> positions) {
+	public void setPositions(VectorInterface<Integer> positions) {
 		this.positions = positions;
 	}
 
@@ -70,6 +73,16 @@ public class baseSObject implements SpaceObjectInterface {
 	@Override
 	public void setFieldVector(VectorInterface<Double> vec) {
 		this.fieldVector = vec;
+	}
+
+	@Override
+	public void setRad(Integer rad) {
+		this.rad = rad;
+	}
+
+	@Override
+	public Integer getRad() {
+		return this.rad;
 	}
 
 }

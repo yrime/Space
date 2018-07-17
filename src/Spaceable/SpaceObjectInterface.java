@@ -10,10 +10,10 @@ public interface SpaceObjectInterface {
 	VectorInterface<Double> getSpeed();
 	VectorInterface<Double> getAcceleration();
 	//Double getField();
-	VectorInterface<Double> getPositions();
+	VectorInterface<Integer> getPositions();
 	void setSpeed(VectorInterface<Double> speed);
 	void setAcceleration(VectorInterface<Double> acceleration);
 	//void setField(Double field);
-	void setPositions(VectorInterface<Double> positions);
+	void setPositions(VectorInterface<Integer> positions);
 	void setFieldVector(VectorInterface<Double> vec);
 }

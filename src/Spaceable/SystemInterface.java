@@ -6,10 +6,10 @@ import physics.PhysicsModelInterface;
 
 public interface SystemInterface {
 	
-	List<SpaceObjectInterface> getSystemObjects();
-	void setSystemObjects(List<SpaceObjectInterface> lObj);
-	void setSystemObjects(SpaceObjectInterface obj) throws Exception;
+	List<SpaceBodyInterface> getSystemObjects();
+	void setSystemObjects(List<SpaceBodyInterface> lObj);
+	void setSystemObjects(SpaceBodyInterface obj) throws Exception;
 	void setPhysicMech(PhysicsModelInterface physicsModel);
 	
-	void setCentre(SpaceObjectInterface obj);
+	void setCentre(SpaceBodyInterface obj);
 }

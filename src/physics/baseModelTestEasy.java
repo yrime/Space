@@ -2,13 +2,16 @@ package physics;
 
 import java.util.List;
 
+import Spaceable.SpaceBodyInterface;
 import Spaceable.SpaceObjectInterface;
+import math.DoubleCalc;
+import math.IntegerCalc;
 import math.VectorInterface;
 import math.baseVector;
 
 public class baseModelTestEasy implements PhysicsModelInterface {
 	private double temp = 0.001;
-	private List<SpaceObjectInterface> systemObjects = null;
+	private List<SpaceBodyInterface> systemObjects = null;
 	
 	private boolean check = false;
 	
@@ -18,7 +21,7 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 	}
 
 	@Override
-	public void setSystemObjects(List<SpaceObjectInterface> lObj) {
+	public void setSystemObjects(List<SpaceBodyInterface> lObj) {
 		this.systemObjects = lObj;
 	}
 
@@ -32,8 +35,8 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 			this.calculerField();
 			for(int i = 0; i < systemObjects.size(); ++i) {
 				sObj = systemObjects.get(i);
-				sObj.getPositions().add(baseVector.multi(sObj.getSpeed(), temp));
-				sObj.getSpeed().add(baseVector.multi(sObj.getAcceleration(), temp));
+				sObj.getPositions().add(baseVector.multi(sObj.getSpeed(), temp, DoubleCalc.INSTANCE));
+				sObj.getSpeed().add(baseVector.multi(sObj.getAcceleration(), temp, DoubleCalc.INSTANCE));
 				sObj.setAcceleration(sObj.getFieldVector());
 			}
 		} catch (Exception e) {
@@ -65,7 +68,7 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 			for(j = 0; j < size; j++) {
 				if(i != j) {
 					sObj2 = this.systemObjects.get(j);
-					buff = baseVector.add(baseVector.multi(sObj1.getPositions(), -1.0), sObj2.getPositions());
+					buff = baseVector.add(baseVector.multi(sObj1.getPositions(), -1, IntegerCalc.INSTANCE), sObj2.getPositions(), IntegerCalc.INSTANCE);
 					fields = sObj2.getMass() / Math.pow(
 							(
 								buff.mod()

@@ -8,13 +8,13 @@ public interface VectorInterface<T> {
 	T getX();
 	T getY();
 	T getZ();
-	double mod();
+	Double mod();
 	void add(VectorInterface<T> vec);
 	//Vector<T> add(Vector<T> a1, Vector<T> a2);
 	//Vector<T> multi(Vector<T> a, T n);
 	void multi(T n);
 	//Double multiScal(Vector<T> a1, Vector<T> a2);
-	Double multiScal(VectorInterface<T> a);
+	T multiScal(VectorInterface<T> a);
 	//Vector<T> multiVec(Vector<T> a1, Vector<T> a2);
 	void multiVec(VectorInterface<T> a);
 }

@@ -1,126 +1,119 @@
 package math;
 
-public class baseVector implements VectorInterface<Double>{
+public class baseVector<T extends Number> implements VectorInterface<T>{
 	
-	private double[] vec = new double[3];
+	private final Calculator<T> calc;
+	//private T[] vec = new T[3];
+	private T x;
+	private T y;
+	private T z;
 
-	public static VectorInterface<Double> add(VectorInterface<Double> a1, VectorInterface<Double> a2) {
+	public static <T extends Number> VectorInterface<T> add(VectorInterface<T> a1, VectorInterface<T> a2, Calculator<T> calc) {
 		return new baseVector(
-				a1.getX() + a2.getX(),
-				a1.getY() + a2.getY(),
-				a1.getZ() + a2.getZ());
+				calc.plus(a1.getX(), a2.getX()),
+				calc.plus(a1.getY(), a2.getY()),
+				calc.plus(a1.getZ(), a2.getZ()),
+				calc);
 	}
 	
-	public static Double multiScal(VectorInterface<Double> a1, VectorInterface<Double> a2) {
-		return a1.getX() * a2.getX() + a1.getY() * a2.getY() + a1.getZ() * a2.getZ();
+	public static <T extends Number> T multiScal(VectorInterface<T> a1, VectorInterface<T> a2, Calculator<T> calc) {
+		return calc.plus(calc.plus(calc.multi(a1.getX(), a2.getX()), calc.multi(a1.getY(), a2.getY())), calc.multi(a1.getZ(), a2.getZ()));
 	}
 	
-	public static VectorInterface<Double> multiVec(VectorInterface<Double> a1, VectorInterface<Double> a2){
+	public static VectorInterface<Number> multiVec(VectorInterface<Number> a1, VectorInterface<Number> a2, Calculator<Number> calc){
 		return new baseVector(
-				a1.getY() * a2.getZ() - a1.getZ() * a2.getY(), 
-				a1.getZ() * a2.getX() - a1.getX() * a2.getZ(), 
-				a1.getX() * a2.getY() - a1.getY() * a2.getX());
+				calc.moins(calc.multi(a1.getY(), a2.getZ()), calc.multi(a1.getZ(), a2.getY())), 
+				calc.moins(calc.multi(a1.getZ(), a2.getX()), calc.multi(a1.getX(), a2.getZ())), 
+				calc.moins(calc.multi(a1.getX(), a2.getY()), calc.multi(a1.getY(), a2.getX())),
+				calc);
 	}
 	
-	public static VectorInterface<Double> multi(VectorInterface<Double> a, Double n) {
-		return new baseVector((Double)a.getX() * n, (Double)a.getY() * n, (Double)a.getZ() * n);
+	public static <T extends Number> VectorInterface multi(VectorInterface<T> a, T n, Calculator<T> calc) {
+		return new baseVector(calc.multi(a.getX(), n), calc.multi(a.getY(), n), calc.multi(a.getZ(), n), calc);
 	}
 
 	
-	public baseVector(Double x, Double y, Double z) {
-		vec[0] = x;
-		vec[1] = y;
-		vec[2] = z;
+	public baseVector(T x, T y, T z, Calculator<T> calc) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.calc = calc;
+	}
+
+	@Override
+	public void setX(T x) {
+		this.x = x;		
+	}
+
+	@Override
+	public void setY(T y) {
+		this.y = y;
+	}
+
+	@Override
+	public void setZ(T z) {
+		this.z = z;
+	}
+
+	@Override
+	public T getX() {
+		return this.x;
+	}
+
+	@Override
+	public T getY() {
+		return this.y;
+	}
+
+	@Override
+	public T getZ() {
+		return this.z;
+	}
+
+	@Override
+	public Double mod() {
+		T a1 = calc.multi(this.x, this.x);
+		T a2 = calc.multi(this.y, this.y);
+		T a3 = calc.multi(this.z, this.z);
+		return calc.sqrt(calc.plus(calc.plus(a1, a2), a3));
+	}
+
+	@Override
+	public void multi(T n) {
+		this.x = calc.multi(this.x, n);
+		this.y = calc.multi(this.y, n);
+		this.z = calc.multi(this.z, n);
+	}
+
+	@Override
+	public T multiScal(VectorInterface<T> a) {
+		return calc.plus(
+				calc.plus(
+						calc.multi(this.x, a.getX()), 
+						calc.multi(this.y, a.getY())
+						), 
+				calc.multi(this.z, a.getZ()));
 	}
 	
 	@Override
-	public void set(Double x, Double y, Double z) {
-		vec[0] = x;
-		vec[1] = y;
-		vec[2] = z;
+	public void multiVec(VectorInterface<T> a) {
+		this.x = calc.moins(calc.multi(this.y, a.getZ()), calc.multi(this.z, a.getY()));
+		this.y = calc.moins(calc.multi(this.z, a.getX()), calc.multi(this.x, a.getZ()));
+		this.z = calc.moins(calc.multi(this.x, a.getY()), calc.multi(this.y, a.getX()));
 	}
 
 	@Override
-	public void setX(Double x) {
-		vec[0] = x;		
+	public void add(VectorInterface<T> vec) {
+		this.x = calc.plus(this.x, vec.getX());
+		this.y = calc.plus(this.y, vec.getY());
+		this.z = calc.plus(this.z, vec.getZ());
 	}
 
 	@Override
-	public void setY(Double y) {
-		vec[1] = y;
+	public void set(T x, T y, T z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
-
-	@Override
-	public void setZ(Double z) {
-		vec[2] = z;
-	}
-
-	@Override
-	public Double getX() {
-		return vec[0];
-	}
-
-	@Override
-	public Double getY() {
-		return vec[1];
-	}
-
-	@Override
-	public Double getZ() {
-		return vec[2];
-	}
-
-	@Override
-	public double mod() {
-		return Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
-	}
-
-	@Override
-	public void multi(Double n) {
-		vec[0] *= n;
-		vec[1] *= n;
-		vec[2] *= n;
-	}
-/*
-	@Override
-	public Double multiScal(Vector<Double> a1, Vector<Double> a2) {
-		return a1.getX() * a2.getX() + a1.getY() * a2.getY() + a1.getZ() * a2.getZ();
-	}
-*/
-	@Override
-	public Double multiScal(VectorInterface<Double> a) {
-		return vec[0] * a.getX() + vec[1] * a.getY() + vec[2] * a.getZ();
-	}
-/*
-	@Override
-	public Vector<Double> multiVec(Vector<Double> a1, Vector<Double> a2) {
-		return new customVector(
-				a1.getY() * a2.getZ() - a1.getZ() * a2.getY(), 
-				a1.getZ() * a2.getX() - a1.getX() * a2.getZ(), 
-				a1.getX() * a2.getY() - a1.getY() * a2.getX());
-	}
-*/
-	@Override
-	public void multiVec(VectorInterface<Double> a) {
-		vec[0] = vec[1] * a.getZ() - vec[2] * a.getY();
-		vec[1] = vec[2] * a.getX() - vec[0] * a.getZ();
-		vec[2] = vec[0] * a.getY() - vec[1] * a.getX(); 
-	}
-
-	@Override
-	public void add(VectorInterface<Double> vec) {
-		this.vec[0] += vec.getX();
-		this.vec[1] += vec.getY();
-		this.vec[2] += vec.getZ();
-	}
-/*
-	@Override
-	public Vector<Double> add(Vector<Double> a1, Vector<Double> a2) {
-		return new customVector(
-				a1.getX() + a2.getX(),
-				a1.getY() + a2.getY(),
-				a1.getZ() + a2.getZ());
-	}
-*/
 
 }
