@@ -10,6 +10,7 @@ import Spaceable.SpaceBodyInterface;
 
 public class TestFrame {
 	
+	private int j = 0;
 	List<SpaceBodyInterface> sbi;
 	
 	public TestFrame(List<SpaceBodyInterface> sl) {
@@ -33,6 +34,11 @@ public class TestFrame {
 			for(int i = 0; i < sbi.size(); ++i) {
 				g2d.fillOval(sbi.get(i).getPositions().getX() + 1, sbi.get(i).getPositions().getY() + 1, sbi.get(i).getRad(), sbi.get(i).getRad());
 			}
+			j++;
+			if(j == 20) {
+				j = 0;
+			}
+			g2d.drawString("ololo", 150 + j, 150 + j);
 			super.repaint();
 		}
 	}

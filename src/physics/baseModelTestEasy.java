@@ -73,7 +73,7 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 							(
 								buff.mod()
 							), 2); 
-					buff.multi(fields/buff.mod());
+					buff = baseVector.multi(buff, fields/buff.mod());
 					vecField.add(buff);
 					//vecField.multi(-1.0);
 					//vecField.multi(fields / vecField.mod());
