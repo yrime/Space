@@ -20,7 +20,7 @@ public class baseSystemTestEasy implements SystemInterface, Runnable {
 			physicsModel.setSystemObjects(spaceObjList);
 			physicsModel.setTemp(100);
 			int i = 0;
-			while(i < 10) {//this.toWorkingThread) {//i < 10) {
+			while(i < 100) {//this.toWorkingThread) {//i < 10) {
 				++i;
 				physicsModel.nextState();
 				System.out.println(spaceObjList.get(0).getPositions().getX() + " p " + spaceObjList.get(0).getPositions().getY());

@@ -27,6 +27,7 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 
 	@Override
 	public void nextState() {
+		//baseVector< b
 		try {
 			if(!check) {
 				this.check();
@@ -35,8 +36,8 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 			this.calculerField();
 			for(int i = 0; i < systemObjects.size(); ++i) {
 				sObj = systemObjects.get(i);
-				sObj.getPositions().add(baseVector.multi(sObj.getSpeed(), temp, DoubleCalc.INSTANCE));
-				sObj.getSpeed().add(baseVector.multi(sObj.getAcceleration(), temp, DoubleCalc.INSTANCE));
+				sObj.getPositions().add(baseVector.multi(sObj.getSpeed(), (double)temp, DoubleCalc.INSTANCE));
+				sObj.getSpeed().add(baseVector.multi(sObj.getAcceleration(), (double)temp, DoubleCalc.INSTANCE));
 				sObj.setAcceleration(sObj.getFieldVector());
 			}
 		} catch (Exception e) {
@@ -58,8 +59,10 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 		}
 		
 		int i, j, size = this.systemObjects.size();
+		Integer x, y, z;
 		double fields;
-		VectorInterface<Double> vecField, buff;// = new customVector(0.0, 0.0, 0.0);
+		VectorInterface<Double> vecField, buffD;
+		VectorInterface<Integer> buffI;// = new customVector(0.0, 0.0, 0.0);
 		SpaceObjectInterface sObj1, sObj2;
 		
 		for(i = 0; i < size; ++i) {
@@ -68,13 +71,15 @@ public class baseModelTestEasy implements PhysicsModelInterface {
 			for(j = 0; j < size; j++) {
 				if(i != j) {
 					sObj2 = this.systemObjects.get(j);
-					buff = baseVector.add(baseVector.multi(sObj1.getPositions(), -1, IntegerCalc.INSTANCE), sObj2.getPositions(), IntegerCalc.INSTANCE);
+					buffI = baseVector.add(baseVector.multi(sObj1.getPositions(), -1, IntegerCalc.INSTANCE), sObj2.getPositions(), IntegerCalc.INSTANCE);
 					fields = sObj2.getMass() / Math.pow(
 							(
-								buff.mod()
+								buffI.mod()
 							), 2); 
-					buff = baseVector.multi(buff, fields/buff.mod());
-					vecField.add(buff);
+					buffD = new baseVector((double)buffI.getX(), (double)buffI.getY(), (double)buffI.getZ(), DoubleCalc.INSTANCE);
+					buffD.multi(fields/buffI.mod());
+					//buff = baseVector.multi(buff, fields/buff.mod(), DoubleCalc.INSTANCE);
+					vecField.add(buffD);
 					//vecField.multi(-1.0);
 					//vecField.multi(fields / vecField.mod());
 					//baseVector.add(sObj, a2)
