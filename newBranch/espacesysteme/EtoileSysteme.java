@@ -68,10 +68,18 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 
 	@Override
 	public void run() {
-		int i = 0;
-		while(true) {
+	//	int i = 0;
+		while(true) {//i < 20) {
+			System.out.println(this.corps.get(1).getVitesse().getX());
+			//++i;
 			this.update();
-			System.out.println(this.corps.get(0).getPosistion().getX());
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(this.corps.get(1).getVitesse().getX());
 		}
 	}
 

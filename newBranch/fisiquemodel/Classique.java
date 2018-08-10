@@ -15,7 +15,7 @@ public class Classique implements fisiqueable {
 		deV = de.getPosistion();
 		buff = new Vector(deV.getX() - aV.getX(), deV.getY() - aV.getY(), deV.getZ() - aV.getZ());
 		buff.multi((a.getMass() * de.getMass()) / Math.pow(buff.module(), 3));
-		buff.multi((1) * G);
+		buff.multi((-1) * G);
 		a.getForce().add(buff);
 	}
 
@@ -33,8 +33,9 @@ public class Classique implements fisiqueable {
 
 	@Override
 	public void calcPosition(CorpsCosmiqueable a, double delta) {
-		a.getVitesse().multi(delta);
-		a.getPosistion().add(a.getVitesse());
+		Vector buff = new Vector(a.getVitesse().getX(), a.getVitesse().getY(), a.getVitesse().getZ());
+		buff.multi(delta);
+		a.getPosistion().add(buff);
 	}
 
 }
