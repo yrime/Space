@@ -14,8 +14,8 @@ public class Classique implements fisiqueable {
 		aV = a.getPosistion();
 		deV = de.getPosistion();
 		buff = new Vector(deV.getX() - aV.getX(), deV.getY() - aV.getY(), deV.getZ() - aV.getZ());
-		buff.multi((a.getMass() * de.getMass()) / Math.pow(buff.module(), 3));
-		buff.multi((-1) * G);
+		buff.multi((G * a.getMass() * de.getMass()) / Math.pow(buff.module(), 3));
+		//buff.multi(G);
 		a.getForce().add(buff);
 	}
 

@@ -74,7 +74,7 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 			//++i;
 			this.update();
 			try {
-				Thread.sleep(10);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
