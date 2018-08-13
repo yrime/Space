@@ -19,7 +19,7 @@ public class TestFrameBranch {
 	public TestFrameBranch(List<CorpsCosmiqueable> sl, CorpsCosmiqueable sun) {
 		this.sbi = sl;
 		this.sun = sun;
-		JFrame w = new JFrame("graphics to testing");
+		JFrame w = new JFrame("Le test sur de l'etoile systeme");
 		w.setSize(sizeFrame, sizeFrame);
 		
 		w.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

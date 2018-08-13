@@ -4,6 +4,7 @@ import java.util.List;
 
 import espace.CorpsCosmiqueable;
 import espace.EtoileSystemable;
+import espacexception.ChocException;
 import fisique.fisiqueable;
 
 public class EtoileSysteme implements EtoileSystemable, Runnable {
@@ -56,10 +57,31 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 			for(j = 0; j < corps.size(); ++j) {
 				if(i != j) {
 					seconde = corps.get(j);
-					fisique.calcForce(premiere, seconde);
+					try {
+						fisique.calcForce(premiere, seconde);
+					}catch(ChocException e) {
+						System.out.println("CHOC AVEC TERRE");
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+					}
 				}
 			}
-			fisique.calcForce(premiere, this.etoile);
+			try {
+				fisique.calcForce(premiere, this.etoile);
+			}catch (ChocException e) {
+				System.out.println("CHOC AVEC ETOILE");
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			fisique.calcAcceleration(premiere, premiere.getForce());
 			fisique.calcVitesse(premiere, this.delta);
 			fisique.calcPosition(premiere, this.delta);
