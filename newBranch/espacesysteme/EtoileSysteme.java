@@ -100,7 +100,7 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 	public void run() {
 	//	int i = 0;
 		while(true) {//i < 20) {
-			System.out.println(this.corps.get(0).getVitesse().getX());
+			System.out.println(this.corps.get(0).getPosistion().getX());
 			//++i;
 			this.update();
 			try {
@@ -109,7 +109,7 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(this.corps.get(0).getVitesse().getX());
+			System.out.println(this.corps.get(0).getPosistion().getX());
 		}
 	}
 

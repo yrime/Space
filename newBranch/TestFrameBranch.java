@@ -14,7 +14,7 @@ public class TestFrameBranch {
 	private int j = 0;
 	List<CorpsCosmiqueable> sbi;
 	CorpsCosmiqueable sun;
-	private int sizeFrame = 400;
+	private int sizeFrame = 450;
 	
 	public TestFrameBranch(List<CorpsCosmiqueable> sl, CorpsCosmiqueable sun) {
 		this.sbi = sl;
@@ -36,16 +36,15 @@ public class TestFrameBranch {
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D)g;
 			g.setColor(Color.ORANGE);
-			g2d.fillOval((int)sun.getPosistion().getX() + sizeFrame/2, (int)sun.getPosistion().getY() + sizeFrame/2, sun.getRad().intValue(), sun.getRad().intValue());
+			g2d.fillOval((int)sun.getPosistion().getX() - sun.getRad().intValue()/2 + sizeFrame/2, (int)sun.getPosistion().getY() - sun.getRad().intValue()/2 + sizeFrame/2, sun.getRad().intValue(), sun.getRad().intValue());
 
 			for(int i = 0; i < sbi.size(); ++i) {
 				g.setColor(Color.BLUE);
-				g2d.fillOval((int)sbi.get(i).getPosistion().getX() + sizeFrame/2, (int)sbi.get(i).getPosistion().getY() + sizeFrame/2, sbi.get(i).getRad().intValue(), sbi.get(i).getRad().intValue());
+				g2d.fillOval((int)sbi.get(i).getPosistion().getX() - sbi.get(i).getRad().intValue()/2 + sizeFrame/2, (int)sbi.get(i).getPosistion().getY() - sbi.get(i).getRad().intValue()/2 + sizeFrame/2, sbi.get(i).getRad().intValue(), sbi.get(i).getRad().intValue());
+				g2d.drawLine((int)sun.getPosistion().getX() + sizeFrame/2, (int)sun.getPosistion().getY() + sizeFrame/2, (int)sbi.get(i).getPosistion().getX() + sizeFrame/2, (int)sbi.get(i).getPosistion().getY() + sizeFrame/2);
 			}
-			j++;
-			if(j == 20) {
-				j = 0;
-			}
+
+
 			//g2d.drawString("ololo", 150 + j, 150 + j);
 			super.repaint();
 		}
