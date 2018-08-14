@@ -2,6 +2,7 @@ package espacesysteme;
 
 import java.util.List;
 
+import algebraique.Vector;
 import espace.CorpsCosmiqueable;
 import espace.EtoileSystemable;
 import espacexception.ChocException;
@@ -52,37 +53,44 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 		if(corps == null) throw new NullPointerException("corps list n'initialize pas");
 		int j = 0;
 		CorpsCosmiqueable premiere, seconde;
+		Vector buff = new Vector(0.0, 0.0, 0.0);
 		for(int i = 0; i < corps.size(); ++i) {
 			premiere = corps.get(i);
 			for(j = 0; j < corps.size(); ++j) {
 				if(i != j) {
 					seconde = corps.get(j);
-					try {
+					buff.setX(seconde.getPosistion().getX() - premiere.getPosistion().getX());
+					buff.setY(seconde.getPosistion().getY() - premiere.getPosistion().getY());
+					buff.setZ(seconde.getPosistion().getZ() - premiere.getPosistion().getZ());
+					if(buff.module() > (premiere.getRad() + seconde.getRad())) {
 						fisique.calcForce(premiere, seconde);
-					}catch(ChocException e) {
-						System.out.println("CHOC AVEC TERRE");
-						/*try {
-							Thread.sleep(500);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}*/
-
+					}else {
+						System.out.println("CHOC AVEC TERRE " + premiere.getVitesse().radian(buff));
+						if(premiere.getVitesse().radian(buff) < 50) {
+							
+						}
 					}
 				}
 			}
-			try {
+			buff.setX(this.etoile.getPosistion().getX() - premiere.getPosistion().getX());
+			buff.setY(this.etoile.getPosistion().getY() - premiere.getPosistion().getY());
+			buff.setZ(this.etoile.getPosistion().getZ() - premiere.getPosistion().getZ());
+			if(buff.module() > (premiere.getRad() + this.etoile.getRad())) {
 				fisique.calcForce(premiere, this.etoile);
-			}catch (ChocException e) {
-				System.out.println("CHOC AVEC ETOILE");
-				/*try {
-					Thread.sleep(500);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/
+				fisique.calcAcceleration(premiere, premiere.getForce());
+				fisique.calcVitesse(premiere, this.delta);
+				fisique.calcPosition(premiere, this.delta);
+			}else {
+				//fisique.calcForce(premiere, this.etoile);
+				if(premiere.getVitesse().radian(buff) < 50) {
+					corps.remove(i);
+					--i;
+					continue;
+				}
+				fisique.calcForce(premiere, this.etoile);
+				fisique.calcAcceleration(premiere, premiere.getForce());
+				System.out.println("CHOC AVEC ETOILE " + premiere.getVitesse().radian(buff));
 			}
-			fisique.calcAcceleration(premiere, premiere.getForce());
 			fisique.calcVitesse(premiere, this.delta);
 			fisique.calcPosition(premiere, this.delta);
 		}
@@ -92,7 +100,7 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 	public void run() {
 	//	int i = 0;
 		while(true) {//i < 20) {
-			System.out.println(this.corps.get(1).getVitesse().getX());
+			System.out.println(this.corps.get(0).getVitesse().getX());
 			//++i;
 			this.update();
 			try {
@@ -101,7 +109,7 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(this.corps.get(1).getVitesse().getX());
+			System.out.println(this.corps.get(0).getVitesse().getX());
 		}
 	}
 

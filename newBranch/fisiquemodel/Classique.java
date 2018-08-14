@@ -9,7 +9,7 @@ public class Classique implements fisiqueable {
 	
 	public final double G = 6.67300E-5;//-11;
 	@Override
-	public void calcForce(CorpsCosmiqueable a, CorpsCosmiqueable de) throws ChocException {
+	public void calcForce(CorpsCosmiqueable a, CorpsCosmiqueable de){
 		double r, mod;
 		Vector buff, aV, deV;
 		aV = a.getPosistion();
@@ -17,13 +17,9 @@ public class Classique implements fisiqueable {
 		buff = new Vector(deV.getX() - aV.getX(), deV.getY() - aV.getY(), deV.getZ() - aV.getZ());
 		
 		mod = buff.module();
-		if(mod > (a.getRad() + de.getRad())){
-			buff.multi((G * a.getMass() * de.getMass()) / Math.pow(mod, 3));
+		buff.multi((G * a.getMass() * de.getMass()) / Math.pow(mod, 3));
 			//buff.multi(G);
-			a.getForce().add(buff);
-		}else {
-			throw new ChocException(a, de);
-		}		
+		a.getForce().add(buff);		
 	}
 
 	@Override
