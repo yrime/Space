@@ -61,12 +61,12 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 						fisique.calcForce(premiere, seconde);
 					}catch(ChocException e) {
 						System.out.println("CHOC AVEC TERRE");
-						try {
+						/*try {
 							Thread.sleep(500);
 						} catch (InterruptedException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-						}
+						}*/
 
 					}
 				}
@@ -75,12 +75,12 @@ public class EtoileSysteme implements EtoileSystemable, Runnable {
 				fisique.calcForce(premiere, this.etoile);
 			}catch (ChocException e) {
 				System.out.println("CHOC AVEC ETOILE");
-				try {
+				/*try {
 					Thread.sleep(500);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
 			}
 			fisique.calcAcceleration(premiere, premiere.getForce());
 			fisique.calcVitesse(premiere, this.delta);
